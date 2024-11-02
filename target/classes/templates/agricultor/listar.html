@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar</title>
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1>Usuários Registrados</h1>
+    <div class="alert alert-success"
+         th:if="!${#strings.isEmpty(mensagem)}" th:text="${mensagem}">
+    </div>
+    <table class="table">
+        <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Data de Nascimento</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th></th>
+        </tr>
+        <tr th:each="agricultor:${agricultores}">
+            <td th:text="${agricultor.nome}">
+                <a th:href="@{/agricultor/editar/}+${agricultor.id}"
+                   class="btn btn-outline-primary">Editar</a>
+            </td>
+            <td th:text="${agricultor.cpf.substring(0, 3) + '***.***-**'}"></td>
+            <td th:text="${#temporals.format(agricultor.nascimento, 'dd/MM/yyyy')}"></td>
+            <td th:text="${agricultor.email}"></td>
+            <td th:text="${agricultor.telefone}"></td>
+            <th>
+                <a  sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/agricultor/editar/}+${agricultor.id}"
+                   class="btn btn-outline-primary">Editar</a>
+                <!-- Button trigger modal -->
+                <button  sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|agricultorId.value = ${agricultor.id}|" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Remover
+                </button>
+            </th>
+        </tr>
+    </table>
+    <a class="btn btn-primary font-monospace " th:href="@{/agricultor/cadastrar}"  sec:authorize="hasRole('ROLE_ADMIN')">Cadastrar</a>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir o agricultor?
+                </div>
+                <div class="modal-footer">
+                    <form th:action="@{/agricultor/remover}" method="post">
+                        <input type="hidden" name="id" id="agricultorId"/>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</html>

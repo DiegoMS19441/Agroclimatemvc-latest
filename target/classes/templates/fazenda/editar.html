@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Fazenda</title>
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1>Editar Fazenda</h1>
+    <form th:action="@{/fazenda/editar}" th:object="${fazenda}" method="post">
+        <input th:field="*{id}" type="hidden"/>
+        <div class="row g-1">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">CNPJ</label>
+                <input type="text" th:field="*{cnpj}" class="form-control w-25" placeholder="Insira o CNPJ">
+                <p th:if="${#fields.hasErrors('cnpj')}" class="text text-danger" th:errors="*{cnpj}"></p>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Razão Social</label>
+                <input type="text" th:field="*{razaoSocial}" class="form-control w-50" placeholder="Razão Social">
+                <p th:if="${#fields.hasErrors('razaoSocial')}" class="text text-danger" th:errors="*{razaoSocial}"></p>
+            </div>
+        </div>
+        <div class="row g-1">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">CEP</label>
+                <input type="text" class="form-control w-25" th:field="*{cep}" placeholder="CEP">
+                <p th:if="${#fields.hasErrors('cep')}" class="text text-danger" th:errors="*{cep}"></p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Logradouro</label>
+                <input type="text" th:field="*{logradouro}" class="form-control">
+                <p th:if="${#fields.hasErrors('logradouro')}" class="text text-danger" th:errors="*{logradouro}"></p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Número</label>
+                <input type="text" th:field="*{numero}" class="form-control w-25">
+                <p th:if="${#fields.hasErrors('numero')}" class="text text-danger" th:errors="*{numero}"></p>
+            </div>
+        </div>
+        <div class="row g-1">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control w-50" th:field="*{email}" placeholder="you@example.com">
+                <p th:if="${#fields.hasErrors('email')}" class="text text-danger" th:errors="*{email}"></p>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Telefone</label>
+                <input type="text" class="form-control w-25" th:field="*{telefone}">
+                <p th:if="${#fields.hasErrors('telefone')}" class="text text-danger" th:errors="*{telefone}"></p>
+            </div>
+        </div>
+        <div class="row g-1">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Tamanho da Fazenda</label>
+                <input type="number" class="form-control w-75" th:field="*{tamanhoFazenda}">
+                <p th:if="${#fields.hasErrors('tamanhoFazenda')}" class="text text-danger" th:errors="*{tamanhoFazenda}"></p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Clima</label>
+                <select th:field="*{clima}" class="form-select w-75">
+                    <option value="">Selecione</option>
+                    <option th:each="cl:${clima}"
+                            th:value="${cl}"
+                            th:text="${cl.label}"
+                            th:title="${cl.descricao}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('clima')}" class="text text-danger" th:errors="*{clima}"></p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Solo</label>
+                <input class="form-control w-75" th:field="*{solo.nome}">
+                <p th:if="${#fields.hasErrors('solo.nome')}" class="text text-danger" th:errors="*{solo.nome}"></p>
+            </div>
+        </div>
+
+        <!-- Cadastro de Safra -->
+        <h3 class="mt-4">Cadastro de Safra</h3>
+        <div class="row g-1">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Nome da Safra</label>
+                <input type="text" th:field="*{safras[0].nome}" class="form-control">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Data de Início</label>
+                <input type="date" th:field="*{safras[0].dataInicio}" class="form-control">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Data de Término</label>
+                <input type="date" th:field="*{safras[0].dataTermino}" class="form-control">
+            </div>
+        </div>
+
+        <!-- Informações da Plantação -->
+        <h3 class="mt-4">Informações da Plantação</h3>
+        <div class="row g-1">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Data de Plantação</label>
+                <input type="date" th:field="*{safras[0].infoPlantacao.dataPlantacao}" class="form-control">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Item Plantado</label>
+                <input type="text" th:field="*{safras[0].infoPlantacao.itemPlantado}" class="form-control">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Área Plantada</label>
+                <input type="number" th:field="*{safras[0].infoPlantacao.areaPlantada}" class="form-control">
+            </div>
+        </div>
+
+        <!-- Informações da Colheita -->
+        <h3 class="mt-4">Informações da Colheita</h3>
+        <div class="row g-1">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Data da Colheita</label>
+                <input type="date" th:field="*{safras[0].colheita.dataColheita}" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Quantidade</label>
+                <input type="number" th:field="*{safras[0].colheita.quantidade}" class="form-control">
+            </div>
+        </div>
+
+        <button class="btn btn-success">Salvar</button>
+        <br>
+        <p th:text="${msg}"></p>
+    </form>
+</div>
+</body>
+</html>

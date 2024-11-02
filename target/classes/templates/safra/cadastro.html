@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Safra</title>
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+  <h1>Cadastro de Safra</h1>
+  <div class="alert alert-success" th:if="!${#strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+
+  <form th:action="@{/safra/cadastrar}" th:object="${safra}" method="post">
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+      <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Dê um nome para sua safra</label>
+      <input type="text" th:field="*{nome}" class="form-control">
+      <p th:if="${#fields.hasErrors('nome')}" class="text text-danger" th:errors="*{nome}"></p>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Qual a data de inicio da safra?</label>
+      <input type="date" th:field="*{dataInicio}" class="form-control">
+      <p th:if="${#fields.hasErrors('dataInicio')}" class="text text-danger" th:errors="*{dataInicio}"></p>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Quando a safra terminou</label>
+      <input type="date" th:field="*{dataTermino}" class="form-control">
+      <p th:if="${#fields.hasErrors('dataTermino')}" class="text text-danger" th:errors="*{dataTermino}"></p>
+    </div>
+
+    <h4>Informações de Plantação</h4>
+    <div class="form-group">
+      <label for="dataPlantacao">Data de Plantação:</label>
+      <input type="date" class="form-control" id="dataPlantacao" th:field="*{infoPlantacao.dataPlantacao}" required>
+    </div>
+    <div class="form-group">
+      <label for="itemPlantado">Item Plantado:</label>
+      <input type="text" class="form-control" id="itemPlantado" th:field="*{infoPlantacao.itemPlantado}" required>
+    </div>
+    <div class="form-group">
+      <label for="areaPlantada">Área Plantada:</label>
+      <input type="number" class="form-control" id="areaPlantada" th:field="*{infoPlantacao.areaPlantada}" required>
+    </div>
+
+    <h4>Informações de Colheita</h4>
+    <div class="form-group">
+      <label for="dataColheita">Data de Colheita:</label>
+      <input type="date" class="form-control" id="dataColheita" th:field="*{colheita.dataColheita}" required>
+    </div>
+    <div class="form-group">
+      <label for="quantidade">Quantidade:</label>
+      <input type="number" class="form-control" id="quantidade" th:field="*{colheita.quantidade}" required>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Cadastrar Safra</button>
+  </form>
+
+
+</div>
+
+</body>
+</html>

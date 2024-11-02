@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Cadastros</title>
+    <style>
+        .details {
+            display: none;
+        }
+
+        .show-details {
+            display: table-row;
+        }
+    </style>
+    <script>
+        function toggleDetails(id) {
+            const detailsRow = document.getElementById('details-' + id);
+            detailsRow.classList.toggle('show-details');
+        }
+    </script>
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+    <h1>Fazendas</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>CNPJ</th>
+            <th>Razão Social</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="fazenda : ${fazendas}">
+            <td th:text="${fazenda.cnpj}"></td>
+            <td th:text="${fazenda.razaoSocial}"></td>
+            <td>
+                <button type="button" class="btn btn-outline-info" th:onclick="'toggleDetails(' + ${fazenda.id} + ')'">
+                    Detalhes
+                </button>
+            </td>
+        </tr>
+        <!-- Linha de detalhes que será expandida/ocultada -->
+        <tr th:each="fazenda : ${fazendas}" th:id="'details-' + ${fazenda.id}" class="details">
+            <td colspan="3">
+                <div>
+                    <strong>CEP:</strong> <span th:text="${fazenda.cep}"></span><br>
+                    <strong>Número:</strong> <span th:text="${fazenda.numero}"></span><br>
+                    <strong>E-mail:</strong> <span th:text="${fazenda.email}"></span><br>
+                    <strong>Telefone:</strong> <span th:text="${fazenda.telefone}"></span><br>
+                    <strong>Tamanho:</strong> <span th:text="${fazenda.tamanhoFazenda}"></span><br>
+                    <strong>Clima:</strong> <span th:text="${fazenda.clima?.label}"></span><br>
+                    <strong>Solo:</strong> <span th:text="${fazenda.solo.nome}"></span><br>
+                    <strong>Safras:</strong>
+                    <ul>
+                        <li th:each="safra : ${fazenda.safras}">
+                            <strong>Data de Início:</strong> <span th:text="${safra.dataInicio}"></span>,
+                            <strong>Data de Fim:</strong> <span th:text="${safra.dataTermino}"></span><br>
+                            <strong>Info Plantação:</strong> <span th:text="${safra.infoPlantacao.dataPlantacao}"></span><br>
+                            <strong>Colheitas:</strong>
+                            <ul>
+                                <li th:each="colheita : ${safra.colheita}">
+                                    Data: <span th:text="${colheita.dataColheita}"></span>,
+                                    Quantidade: <span th:text="${colheita.quantidade}"></span>
+                                </li>
+                            </ul>
+                            <hr>
+                        </li>
+                    </ul>
+                    <a  sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/fazenda/editar/}+${fazenda.id}" class="btn btn-outline-primary">Editar</a>
+                    <!-- Button trigger modal -->
+                    <button  sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|fazendaId.value = ${fazenda.id}|" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Remover
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary font-monospace"  sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/fazenda/cadastrar}">Cadastrar</a>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir a fazenda?
+                </div>
+                <div class="modal-footer">
+                    <form th:action="@{/fazenda/remover}" method="post">
+                        <input type="hidden" name="id" id="fazendaId"/>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
