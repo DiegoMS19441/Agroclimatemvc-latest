@@ -32,13 +32,13 @@
             }
         }
         .no-link-style {
-            color: inherit;         /* Usar a cor padrão do texto */
-            text-decoration: none;  /* Remover o sublinhado */
-            cursor: default;        /* Cursor padrão, sem apontador de link */
+            color: inherit;       
+            text-decoration: none; 
+            cursor: default;        
         }
 
         .no-link-style:hover {
-            color: inherit;         /* Mesma cor ao passar o mouse */
+            color: inherit;        
             text-decoration: none;
         }
 
@@ -126,7 +126,7 @@
 
             <div class="nav-item" sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="post" style="display:inline;">
-                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    <button type="submit" class="btn btn-link nav-link text-white">Logout</button>
                 </form>
             </div>
 
