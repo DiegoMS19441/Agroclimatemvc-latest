@@ -28,6 +28,9 @@ public class SecurityConfigurations {
                         .requestMatchers("/agricultor/cadastrar").hasRole("ADMIN")
                         .requestMatchers("/agricultor/editar").hasRole("ADMIN")
                         .requestMatchers("/agricultor/remover").hasRole("ADMIN")
+                        .requestMatchers("/usuario/registrar").hasRole("ADMIN")
+
+
 
 
                         .requestMatchers("/user/**").hasRole("USER")
