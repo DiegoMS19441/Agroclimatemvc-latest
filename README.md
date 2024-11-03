@@ -34,4 +34,4 @@ insumos em plantações improdutivas.
 https://youtu.be/mVtNTmQdxeI
 
 # IMPORTANTE !!!!!
-Antes de executar o código insira as suas credenciais de banco de dados.
+Antes de executar o código insira as suas credenciais de banco de dados no application.properties
