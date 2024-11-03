@@ -32,3 +32,6 @@ insumos em plantações improdutivas.
 # Video de apresentação do projeto
 
 https://youtu.be/mVtNTmQdxeI
+
+# IMPORTANTE !!!!!
+Antes de executar o código insira as suas credenciais de banco de dados.
