@@ -31,7 +31,9 @@ insumos em plantações improdutivas.
 
 # Video de apresentação do projeto
 
-https://youtu.be/mVtNTmQdxeI
+Youtube - https://youtu.be/mVtNTmQdxeI
+Vimeo - https://vimeo.com/1025972493?share=copy
+Google Drive - https://drive.google.com/file/d/1mmT0hDtYUkEAfKe9AbSIdvLP3f0-_hkz/view?usp=drive_link
 
 # IMPORTANTE !!!!!
 Antes de executar o código insira as suas credenciais de banco de dados no application.properties
